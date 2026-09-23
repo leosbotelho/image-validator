@@ -227,23 +227,23 @@ public record ImageValidator(
                                 new ImageValidator(fileValidator, dimensions.getFirst()));
         }
 
-    // @formatter:off
-    /// Returns the intersection of the given {@link ImageValidator}s.
-    ///
-    /// In strict mode, all intersections must succeed.
-    /// In non-strict mode, the resulting validator may contain any successful intersections.
-    ///
-    /// @param strict whether all intersections must succeed
-    /// @param a the first
-    /// @param b the second
-    /// @return the intersected image validator,
-    ///         or {@link Optional#empty()} if no effective policies remain after intersection
-    /// @throws NullPointerException if {@code a} or {@code b} is {@code null}
-    /// @see #combine
-    /// @see FileSize#intersect
-    /// @see FileType#intersect
-    /// @see ImageDimensions#intersect
-    // @formatter:on
+        // @formatter:off
+        /// Returns the intersection of the given {@link ImageValidator}s.
+        ///
+        /// In strict mode, all intersections must succeed.
+        /// In non-strict mode, the resulting validator may contain any successful intersections.
+        ///
+        /// @param strict whether all intersections must succeed
+        /// @param a the first
+        /// @param b the second
+        /// @return the intersected image validator,
+        ///         or {@link Optional#empty()} if no effective policies remain after intersection
+        /// @throws NullPointerException if {@code a} or {@code b} is {@code null}
+        /// @see #combine
+        /// @see FileSize#intersect
+        /// @see FileType#intersect
+        /// @see ImageDimensions#intersect
+        // @formatter:on
         public static Optional<ImageValidator> intersect(
                         boolean strict,
                         ImageValidator a,
@@ -275,24 +275,24 @@ public record ImageValidator(
                 return intersect(false, a, b);
         }
 
-    // @formatter:off
-    /// Returns the relaxation of the given {@link ImageValidator}s.
-    ///
-    /// When {@code requireAll} is {@code true}, all relaxations must succeed.
-    /// Otherwise, the resulting validator may contain any successful relaxation,
-    /// with dummy policies used when the file size or image dimensions relaxation fails.
-    ///
-    /// @param requireAll whether all relaxations must succeed
-    /// @param a the first
-    /// @param b the second
-    /// @return the relaxed image validator,
-    ///         or {@link Optional#empty()} if no effective policies remain after relaxation
-    /// @throws NullPointerException if any argument is {@code null}
-    /// @see #combine
-    /// @see FileSize#span
-    /// @see FileType#union
-    /// @see ImageDimensions#span
-    // @formatter:on
+        // @formatter:off
+        /// Returns the relaxation of the given {@link ImageValidator}s.
+        ///
+        /// When {@code requireAll} is {@code true}, all relaxations must succeed.
+        /// Otherwise, the resulting validator may contain any successful relaxation,
+        /// with dummy policies used when the file size or image dimensions relaxation fails.
+        ///
+        /// @param requireAll whether all relaxations must succeed
+        /// @param a the first
+        /// @param b the second
+        /// @return the relaxed image validator,
+        ///         or {@link Optional#empty()} if no effective policies remain after relaxation
+        /// @throws NullPointerException if any argument is {@code null}
+        /// @see #combine
+        /// @see FileSize#span
+        /// @see FileType#union
+        /// @see ImageDimensions#span
+        // @formatter:on
         public static Optional<ImageValidator> relax(
                         boolean requireAll,
                         ImageValidator a,
@@ -342,34 +342,34 @@ public record ImageValidator(
                 return validateFileSizeAndMetadata(false, size, extension, mimeType);
         }
 
-    // @formatter:off
-    /// Validates image format and dimensions against the configured policies.
-    ///
-    /// This method may be used as the second step of a validation flow,
-    /// following {@link #validateFileSizeAndMetadata}.
-    ///
-    /// In strict mode, format, width, and height must all be provided,
-    /// and the image dimensions and file type policies must not be dummy or absent.
-    ///
-    /// In lax mode, each provided value is validated when the corresponding policy is available;
-    /// an {@link IllegalStateException} is thrown when a provided value requires an unavailable policy.
-    ///
-    /// Width and height must either both be provided or both be empty.
-    ///
-    /// @param strict whether all required inputs and validation policies must be present
-    /// @param candidates the file type mappings to validate against
-    /// @param format the image format
-    /// @param width the image width
-    /// @param height the image height
-    /// @throws IllegalStateException if the required validation policies are unavailable
-    ///                               for the provided inputs
-    /// @throws IllegalArgumentException if strict validation is requested without
-    ///                                  format, width, or height,
-    ///                                  or if only one of width and height is provided
-    /// @throws NullPointerException if any argument is {@code null}
-    /// @see ImageDimensions#validate(int, int)
-    /// @see FileValidator#validateFormat
-    // @formatter:on
+        // @formatter:off
+        /// Validates image format and dimensions against the configured policies.
+        ///
+        /// This method may be used as the second step of a validation flow,
+        /// following {@link #validateFileSizeAndMetadata}.
+        ///
+        /// In strict mode, format, width, and height must all be provided,
+        /// and the image dimensions and file type policies must not be dummy or absent.
+        ///
+        /// In lax mode, each provided value is validated when the corresponding policy is available;
+        /// an {@link IllegalStateException} is thrown when a provided value requires an unavailable policy.
+        ///
+        /// Width and height must either both be provided or both be empty.
+        ///
+        /// @param strict whether all required inputs and validation policies must be present
+        /// @param candidates the file type mappings to validate against
+        /// @param format the image format
+        /// @param width the image width
+        /// @param height the image height
+        /// @throws IllegalStateException if the required validation policies are unavailable
+        ///                               for the provided inputs
+        /// @throws IllegalArgumentException if strict validation is requested without
+        ///                                  format, width, or height,
+        ///                                  or if only one of width and height is provided
+        /// @throws NullPointerException if any argument is {@code null}
+        /// @see ImageDimensions#validate(int, int)
+        /// @see FileValidator#validateFormat
+        // @formatter:on
         public void validateImageInfo(
                         boolean strict,
                         List<FileTypeMapping> candidates,
@@ -442,19 +442,19 @@ public record ImageValidator(
                 validateImageInfo(false, candidates, format, width, height);
         }
 
-    // @formatter:off
-    /// Inspects the input using {@link ImageInspector} and validates its image format and dimensions
-    /// using {@link #validateImageInfo(boolean, List, Optional, OptionalInt, OptionalInt)} against
-    /// the configured policies in strict mode.
-    ///
-    /// @param candidates the file type mappings to validate against
-    /// @param input the image input to inspect and validate
-    /// @throws NullPointerException if {@code candidates} or {@code input} is {@code null}
-    /// @throws IllegalStateException if the required validation policies are unavailable
-    ///                               for strict validation
-    /// @throws IOException if an I/O error occurs, if the stream does not contain recognizable
-    ///                     image data, or if no registered reader supports the format
-    // @formatter:on
+        // @formatter:off
+        /// Inspects the input using {@link ImageInspector} and validates its image format and dimensions
+        /// using {@link #validateImageInfo(boolean, List, Optional, OptionalInt, OptionalInt)} against
+        /// the configured policies in strict mode.
+        ///
+        /// @param candidates the file type mappings to validate against
+        /// @param input the image input to inspect and validate
+        /// @throws NullPointerException if {@code candidates} or {@code input} is {@code null}
+        /// @throws IllegalStateException if the required validation policies are unavailable
+        ///                               for strict validation
+        /// @throws IOException if an I/O error occurs, if the stream does not contain recognizable
+        ///                     image data, or if no registered reader supports the format
+        // @formatter:on
         public void validateImageInfo(
                         List<FileTypeMapping> candidates,
                         InputStream input) throws IOException {
