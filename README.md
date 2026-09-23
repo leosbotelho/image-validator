@@ -56,7 +56,21 @@ image.max-pixels=2500000
 
 The unlimited value can be used for image dimensions and memory constraints.
 
+## Installation
+
+### Maven
+
+```xml
+<dependency>
+    <groupId>fun.trium</groupId>
+    <artifactId>image-validator</artifactId>
+    <version>1.0.0-alpha</version>
+</dependency>
+```
+
 ## Usage
+
+**Note**: Import from `trium`, not `fun.trium`.
 
 Basic usage with a single configuration and multi-step validation:
 ```java
