@@ -5,6 +5,30 @@
     <artifactId>image-validator</artifactId>
     <version>1.0.0-alpha</version>
 
+    <name>Image Validator</name>
+    <description>Java library for validating images against configurable security constraints.</description>
+    <url>https://github.com/leosbotelho/image-validator</url>
+
+    <licenses>
+        <license>
+            <name>MIT License</name>
+            <url>https://opensource.org/license/mit</url>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <name>Leonardo de Santana Botelho</name>
+            <url>https://github.com/leosbotelho</url>
+        </developer>
+    </developers>
+
+    <scm>
+        <connection>scm:git:https://github.com/leosbotelho/image-validator.git</connection>
+        <developerConnection>scm:git:https://github.com/leosbotelho/image-validator.git</developerConnection>
+        <url>https://github.com/leosbotelho/image-validator</url>
+    </scm>
+
     <properties>
         <maven.compiler.release>27</maven.compiler.release>
     </properties>
