@@ -2,6 +2,8 @@
 
 Java library for validating images against configurable security constraints.
 
+See also [File Validator](https://github.com/leosbotelho/file-validator).
+
 ## Motivation
 
 Existing tools fall short for production-grade image validation due to three main limitations:
