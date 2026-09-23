@@ -1,0 +1,19 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>trium</groupId>
+    <artifactId>image-validator</artifactId>
+    <version>1.0.0-alpha</version>
+
+    <properties>
+        <maven.compiler.release>27</maven.compiler.release>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>trium</groupId>
+            <artifactId>file-validator</artifactId>
+            <version>1.0.0-alpha</version>
+        </dependency>
+    </dependencies>
+</project>
