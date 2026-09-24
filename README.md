@@ -51,7 +51,7 @@ image.min-height=320
 # Orientation-flexible 1920px bounding box, max 2.5 MP
 image.max-width=1920
 image.max-height=1920
-image.max-pixels=2500000
+image.max-area=2500000
 ```
 
 The unlimited value can be used for image dimensions and memory constraints.
