@@ -376,22 +376,17 @@ public record ImageValidator(
                         Optional<String> format,
                         OptionalInt width,
                         OptionalInt height) {
+                Objects.requireNonNull(candidates, "candidates must not be null");
+                Objects.requireNonNull(format, "format must not be null");
+                Objects.requireNonNull(width, "width must not be null");
+                Objects.requireNonNull(height, "height must not be null");
+
                 if (strict
                                 && (imageDimensions.isDummy()
                                                 || fileValidator.isEmpty()
                                                 || fileValidator.get().fileType().isEmpty())) {
                         throw new IllegalStateException(
                                         "strict validation requires image dimensions and file type policies");
-                }
-
-                Objects.requireNonNull(candidates, "candidates must not be null");
-                Objects.requireNonNull(format, "format must not be null");
-                Objects.requireNonNull(width, "width must not be null");
-                Objects.requireNonNull(height, "height must not be null");
-
-                if (strict && !(format.isPresent() && width.isPresent() && height.isPresent())) {
-                        throw new IllegalArgumentException(
-                                        "format, width, and height must all be present in strict mode");
                 }
 
                 if (format.isPresent()
@@ -401,14 +396,19 @@ public record ImageValidator(
                                         "file type policy is required when format is provided");
                 }
 
-                if (width.isPresent() != height.isPresent()) {
-                        throw new IllegalArgumentException(
-                                        "width and height must either both be present or both be absent");
-                }
-
                 if (width.isPresent() && height.isPresent() && imageDimensions.isDummy()) {
                         throw new IllegalStateException(
                                         "image dimensions policy must not be dummy when dimensions are provided");
+                }
+
+                if (strict && !(format.isPresent() && width.isPresent() && height.isPresent())) {
+                        throw new IllegalArgumentException(
+                                        "format, width, and height must all be present in strict mode");
+                }
+
+                if (width.isPresent() != height.isPresent()) {
+                        throw new IllegalArgumentException(
+                                        "width and height must either both be present or both be absent");
                 }
 
                 if (width.isPresent() && height.isPresent()) {
