@@ -448,8 +448,7 @@ public record ImageValidator(
     /// @param format the image format
     /// @param width the image width
     /// @param height the image height
-    /// @throws IllegalStateException if the required validation policies are unavailable
-    ///                               for the provided inputs
+    /// @throws IllegalStateException if required validation policies are unavailable
     /// @throws IllegalArgumentException if strict validation is requested without
     ///                                  format, width, or height,
     ///                                  or if only one of width and height is provided
@@ -537,8 +536,7 @@ public record ImageValidator(
     /// @param candidates the file type mappings to validate against
     /// @param input the image input to inspect and validate
     /// @throws NullPointerException if {@code candidates} or {@code input} is {@code null}
-    /// @throws IllegalStateException if the required validation policies are unavailable
-    ///                               for strict validation
+    /// @throws IllegalStateException if required validation policies are unavailable
     /// @throws IOException if an I/O error occurs, if the stream does not contain recognizable
     ///                     image data, or if no registered reader supports the format
     // @formatter:on
