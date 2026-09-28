@@ -468,4 +468,63 @@ public record ImageValidator(
                 OptionalInt.of(info.width()),
                 OptionalInt.of(info.height()));
     }
+
+    /// Validates image format and dimensions
+    /// against all configured file type mappings.
+    ///
+    /// For multi-step validation, use
+    /// {@link #validateImageInfo(boolean, List, Optional, OptionalInt, OptionalInt)}.
+    public void validateImageInfo(
+            boolean strict,
+            Optional<String> format,
+            OptionalInt width,
+            OptionalInt height) {
+        validateImageInfo(
+                strict,
+                fileValidator.map(o -> o.fileType()
+                        .map(t -> t.mappings().stream().toList())
+                        .orElseGet(List::of))
+                        .orElseGet(List::of),
+                format,
+                width,
+                height);
+    }
+
+    /// Validates image format and dimensions
+    /// against all configured file type mappings in strict mode.
+    ///
+    /// @see #validateImageInfo(boolean, Optional, OptionalInt, OptionalInt)
+    public void strictValidateImageInfo(
+            Optional<String> format,
+            OptionalInt width,
+            OptionalInt height) {
+        validateImageInfo(true, format, width, height);
+    }
+
+    /// Validates image format and dimensions
+    /// against all configured file type mappings in lax mode.
+    ///
+    /// @see #validateImageInfo(boolean, Optional, OptionalInt, OptionalInt)
+    public void laxValidateImageInfo(
+            Optional<String> format,
+            OptionalInt width,
+            OptionalInt height) {
+        validateImageInfo(false, format, width, height);
+    }
+
+    // @formatter:off
+    /// Inspects the input using {@link ImageInspector} and validates its image format and dimensions
+    /// against all configured policies in strict mode.
+    ///
+    /// For multi-step validation, use
+    /// {@link #validateImageInfo(List, InputStream)}.
+    // @formatter:on
+    public void validateImageInfo(InputStream input) throws IOException {
+        ImageInfo info = ImageInspector.inspect(input);
+
+        strictValidateImageInfo(
+                Optional.of(info.format()),
+                OptionalInt.of(info.width()),
+                OptionalInt.of(info.height()));
+    }
 }
