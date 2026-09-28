@@ -96,6 +96,8 @@ You have full control over what is validated by calling the validation methods w
 `validateImageInfo` can also be called directly with pre-extracted attributes (format, width, height) instead of reading from an input source.
 
 Also available as aliases:
+* `strictValidate`
+* `laxValidate`
 * `strictValidateFileSizeAndMetadata`
 * `laxValidateFileSizeAndMetadata`
 * `strictValidateImageInfo`

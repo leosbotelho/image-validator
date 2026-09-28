@@ -369,6 +369,30 @@ public record ImageValidator(
         }
     }
 
+    /// Validates the file size and metadata,
+    /// followed by image format and dimensions in strict mode.
+    ///
+    /// @see #validate(boolean, OptionalLong, Optional, Optional, Optional)
+    public void strictValidate(
+            OptionalLong size,
+            Optional<String> extension,
+            Optional<String> mimeType,
+            Optional<InputStream> input) throws IOException {
+        validate(true, size, extension, mimeType, input);
+    }
+
+    /// Validates the file size and metadata,
+    /// followed by image format and dimensions in lax mode.
+    ///
+    /// @see #validate(boolean, OptionalLong, Optional, Optional, Optional)
+    public void laxValidate(
+            OptionalLong size,
+            Optional<String> extension,
+            Optional<String> mimeType,
+            Optional<InputStream> input) throws IOException {
+        validate(false, size, extension, mimeType, input);
+    }
+
     /// Validates the file size and metadata against the configured policies.
     ///
     /// @see FileValidator#validateFileSizeAndMetadata
