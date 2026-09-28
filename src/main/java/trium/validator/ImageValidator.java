@@ -306,6 +306,69 @@ public record ImageValidator(
                 b);
     }
 
+    // @formatter:off
+    /// Validates the file size and metadata, followed by image format and dimensions
+    /// against the configured policies.
+    ///
+    /// This method encapsulates the two-step validation flow.
+    ///
+    /// In strict mode, size, extension, MIME type, and image input must all be provided,
+    /// and file validation and image dimensions policies must be present and effective.
+    ///
+    /// In lax mode, each provided value is validated when the corresponding policy is available.
+    ///
+    /// @param strict whether all required inputs and validation policies must be present
+    /// @param size the file size to validate
+    /// @param extension the file extension to validate
+    /// @param mimeType the MIME type to validate
+    /// @param input the image input to inspect and validate
+    /// @throws IllegalStateException if required validation policies are unavailable
+    /// @throws IllegalArgumentException if strict validation is requested without
+    ///                                  size, extension, MIME type, or input
+    /// @throws NullPointerException if any argument is {@code null}
+    /// @throws IOException if an I/O error occurs, if the stream does not contain recognizable
+    ///                     image data, or if no registered reader supports the format
+    // @formatter:on
+    public void validate(
+            boolean strict,
+            OptionalLong size,
+            Optional<String> extension,
+            Optional<String> mimeType,
+            Optional<InputStream> input) throws IOException {
+        Objects.requireNonNull(size, "size must not be null");
+        Objects.requireNonNull(extension, "extension must not be null");
+        Objects.requireNonNull(mimeType, "mimeType must not be null");
+        Objects.requireNonNull(input, "input must not be null");
+
+        if (strict && (fileValidator.isEmpty() || imageDimensions.isDummy())) {
+            throw new IllegalStateException(
+                    "strict validation requires file validation and image dimensions policies");
+        }
+
+        if (strict && !(size.isPresent()
+                && extension.isPresent()
+                && mimeType.isPresent()
+                && input.isPresent())) {
+            throw new IllegalArgumentException(
+                    "size, extension, mimeType, and input must all be present in strict mode");
+        }
+
+        boolean hasFileMetadata = size.isPresent()
+                || extension.isPresent()
+                || mimeType.isPresent();
+
+        if (hasFileMetadata) {
+            var candidates = validateFileSizeAndMetadata(
+                    strict, size, extension, mimeType);
+
+            if (input.isPresent()) {
+                validateImageInfo(candidates, input.get());
+            }
+        } else if (input.isPresent()) {
+            validateImageInfo(input.get());
+        }
+    }
+
     /// Validates the file size and metadata against the configured policies.
     ///
     /// @see FileValidator#validateFileSizeAndMetadata

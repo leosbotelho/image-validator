@@ -78,11 +78,15 @@ Basic usage with a single configuration and multi-step validation:
 // Load configuration from a file
 var imgValidator = ImageConfig.load(configInput);
 
-// First step
-var candidates = imgValidator.validateFileSizeAndMetadata(true, fileSize, extension, mimeType);
+// Validate file size and metadata, followed by image format and dimensions
+// This method encapsulates the two-step validation flow
 
-// Second step
-imgValidator.validateImageInfo(candidates, imageInput);
+imgValidator.validate(
+        true,
+        fileSize,
+        extension,
+        mimeType,
+        Optional.of(imageInput));
 ```
 
 You have full control over what is validated by calling the validation methods with the desired parameters.
