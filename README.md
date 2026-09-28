@@ -89,13 +89,17 @@ imgValidator.validate(
         Optional.of(imageInput));
 ```
 
+For more control, validation can be performed explicitly in two steps using the desired strict or lax methods.
+
 You have full control over what is validated by calling the validation methods with the desired parameters.
+
+`validateImageInfo` can also be called directly with pre-extracted attributes (format, width, height) instead of reading from an input source.
 
 Also available as aliases:
 * `strictValidateFileSizeAndMetadata`
 * `laxValidateFileSizeAndMetadata`
-
-`validateImageInfo` can also be called directly with pre-extracted attributes (format, width, height) instead of reading from an input source.
+* `strictValidateImageInfo`
+* `laxValidateImageInfo`
 
 <br>
 
