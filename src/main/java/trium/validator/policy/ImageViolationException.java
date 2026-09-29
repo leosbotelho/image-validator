@@ -30,7 +30,7 @@ public class ImageViolationException extends RuntimeException {
         this.reason = Objects.requireNonNull(reason, "reason must not be null");
     }
 
-    public Reason getReason() {
+    public Reason reason() {
         return reason;
     }
 }
